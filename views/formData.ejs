@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/formData.css">
+    <!-- <link -->
+    <script>
+
+        async function redirectFun() {
+            console.log('redirect to');
+            location.href='www.youtube.com';
+        }
+        var dataId = document.getElementById('#redirectBTN').onclick = function () {
+        location.href = "www.youtube.com";
+        };
+    </script>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-2"></div>
+            <div class="col-lg-6 col-md-8 login-box">
+                <div class="col-lg-12 login-key">
+                    <i class="fa fa-key" aria-hidden="true"></i>
+                </div>
+                <div class="col-lg-12 login-title">
+                    Send Email
+                </div>
+
+                <div class="col-lg-12 login-form">
+                    <div class="col-lg-12 login-form">
+                        <form id="form" action="/send" method="POST" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label class="form-control-label">Body</label>
+                                <input type="text" class="form-control" name="Body" required>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="file" class="admin__input" id="myFile" name="myFile" />
+                            </div>
+
+                            <div class="col-lg-12 loginbttm">
+                                <div class="col-lg-6 login-btm login-text">
+                                    <!-- Error Message -->
+                                </div>
+                                <div class="col-lg-6 login-btm login-button">
+                                    <button id="redirectBTN" type="submit" class="btn btn-outline-primary">Send mail</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-2"></div>
+            </div>
+        </div>
+</body>
+
+
+
+<!-- ///////////////////////////////////////////////////////////// -->
+
+
+
+<script>
+    const parentDiv = document.querySelector(".admin");
+    window.addEventListener("load", async () => {
+      try {
+        let result = await axios({
+          method: "GET",
+          url: "/send",
+        });
+        let files = result.data.files;
+  
+        // files.forEach((file) => {
+        //   markup = `
+        //         <div class="files__entity">
+        //           <i class="files__icon fa fa-file-text" aria-hidden="true"></i>
+        //           <span class="files__date">Date created:- ${file.createdAt}</span>
+        //           <a href="${file.name}" class="files__link"><i class="fa fa-eye tests__icon" aria-hidden="true"></i></a>
+        //         </div>
+        //       `;
+        //   parentDiv.insertAdjacentHTML("beforeend", markup);
+        // });
+        files.map((file) => {
+          markup = `
+                <div class="files__entity">
+                  <i class="files__icon fa fa-file-text" aria-hidden="true"></i>
+                  <span class="files__date">Date created:- ${file.createdAt}</span>
+                  <a href="${file.name}" class="files__link"><i class="fa fa-eye tests__icon" aria-hidden="true"></i></a>
+                </div>
+              `;
+          // parentDiv.insertAdjacentHTML("beforeend", markup);
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  </script>
+  <!-- ///////////////////////////////////////////////////////////////////// -->
+</html>
